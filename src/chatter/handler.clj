@@ -1,11 +1,15 @@
 (ns chatter.handler
- (:require [compojure.core :refer :all]
+  (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
+            [ring.middleware.params :refer [wrap-params]]
+            [ring.adapter.jetty :as jetty]
             [hiccup.page :as page]
             [hiccup.form :as form]
-            [ring.middleware.params :refer [wrap-params]]))
-(def chat-messages (atom '()))
+            [ring.util.anti-forgery :as anti-forgery]
+            [environ.core :refer [env]]))
+
+(def chat-messages (atom ()))
 
 (defn generate-message-view
   "This generates the HTML for displaying messages"
@@ -47,3 +51,14 @@
 
 
 (def app (wrap-params app-routes))
+
+(defn init []
+  (println "chatter is starting"))
+
+
+(defn destroy []
+  (println "chatter is shutting down"))
+
+(defn -main [& [port]]
+  (let [port (Integer. (or port (env :port) 5000))]
+    (jetty/run-jetty #'app {:port port :join? false})))
