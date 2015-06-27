@@ -1,6 +1,6 @@
 # chatter
 
-Melissa Aune
+This is a chat application that I am making. 
 
 ## Prerequisites
 
@@ -16,4 +16,4 @@ To start a web server for the application, run:
 
 ## License
 
-Copyright © 2015 Melissa Aune Coding
+Copyright © 2015 Melissa Coding
